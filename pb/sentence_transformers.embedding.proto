@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package sentence_transformers.embedding;
+
+service EmbeddingService{
+  rpc embedding(EmbeddingMessage) returns (EmbeddingMessageResponse) {}
+  rpc count_tokens(CountTokensMessage) returns (CountTokensResponse) {}
+  rpc split_text(SplitTextMessage) returns (SplitTextResponse) {}
+}
+
+enum EncodingFormat {
+  FLOAT = 0;
+  BASE64 = 1;
+}
+
+message EmbeddingMessage{
+  EncodingFormat encoding_format = 1;
+  repeated string messages = 2;
+  optional bool truncate = 3;
+}
+
+message EmbeddingMessageResponse{
+  uint32 row = 1;
+  uint32 col = 2;
+  repeated float data = 3;
+  repeated string b64data = 4;
+  repeated uint32 errors = 5;
+}
+
+message CountTokensMessage{
+  repeated string messages = 1;
+}
+
+message CountTokensResponsePart{
+  uint32 tokens = 1;
+  bool needs_truncation = 2;
+}
+
+message CountTokensResponse{
+  repeated CountTokensResponsePart parts = 1;
+}
+
+message SplitTextMessage{
+  repeated string messages = 1;
+  uint32 chunk_size = 2;
+  uint32 chunk_overlap = 3;
+}
+
+message SplitTextResponsePart{
+  repeated string parts = 1;
+}
+
+message SplitTextResponse{
+  repeated SplitTextResponsePart parts = 1;
+}
