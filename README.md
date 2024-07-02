@@ -2,7 +2,7 @@
 ```bash
 # use betterproto, don't use pydantic before it's compatible with v2
 # move to multi stage docker build to avoid submit it to git
-python -m grpc_tools.protoc -I ./pb --python_betterproto_out=grpc_servers/sentence_transformers/pb/ pb/sentence_transformers.embedding.proto
+python -m grpc_tools.protoc -I ./pb --python_betterproto_out=sentence_transformers/pb/ pb/sentence_transformers.embedding.proto
 python -m grpc_tools.protoc -I ./pb --python_betterproto_out=pb/ pb/sentence_transformers.embedding.proto
 ```
 
